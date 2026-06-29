@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE DAILY PULSE — News That Moves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,700&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15141a;
+    --paper:#f4efe4;
+    --red:#c8132e;
+    --mustard:#e7ad2b;
+    --blue:#27406b;
+    --line:rgba(21,20,26,0.18);
+    --muted:#5c5848;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+
+  /* ---------- TICKER ---------- */
+  .ticker-wrap{
+    background:var(--ink);
+    color:var(--paper);
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:3px solid var(--red);
+  }
+  .ticker{
+    display:inline-flex;
+    padding-left:100%;
+    animation:scroll-left 28s linear infinite;
+    font-family:'Space Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+  }
+  .ticker span{padding:0.55rem 2rem;border-right:1px solid rgba(244,239,228,0.25);}
+  .ticker span b{color:var(--mustard);margin-right:0.5rem;}
+  @keyframes scroll-left{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-100%);}
+  }
+
+  /* ---------- MASTHEAD ---------- */
+  header.masthead{
+    text-align:center;
+    padding:1.6rem 1rem 1.2rem;
+    border-bottom:4px solid var(--ink);
+    position:relative;
+  }
+  .edition-row{
+    display:flex;
+    justify-content:space-between;
+    max-width:1100px;
+    margin:0 auto 0.6rem;
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding:0 0.5rem;
+  }
+  h1.logo{
+    font-family:'Playfair Display',serif;
+    font-weight:900;
+    font-size:clamp(2.6rem,8vw,5.5rem);
+    margin:0;
+    letter-spacing:-0.02em;
+    line-height:0.95;
+  }
+  h1.logo .accent{color:var(--red);font-style:italic;}
+  .tagline{
+    font-family:'Space Mono',monospace;
+    font-size:0.75rem;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--blue);
+    margin-top:0.4rem;
+  }
+
+  nav.categories{
+    display:flex;
+    justify-content:center;
+    gap:0;
+    flex-wrap:wrap;
+    background:var(--ink);
+  }
+  nav.categories a{
+    color:var(--paper);
+    font-size:0.82rem;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:0.85rem 1.3rem;
+    border-right:1px solid rgba(244,239,228,0.15);
+    transition:background 0.2s, color 0.2s;
+  }
+  nav.categories a:hover{background:var(--red);color:#fff;}
+
+  main{max-width:1200px;margin:0 auto;padding:2rem 1rem 1rem;}
+
+  /* ---------- LEAD STORY ---------- */
+  .lead-grid{
+    display:grid;
+    grid-template-columns:1.6fr 1fr;
+    gap:2rem;
+    border-bottom:3px solid var(--ink);
+    padding-bottom:2rem;
+    margin-bottom:2rem;
+  }
+  .lead-img-wrap{position:relative;overflow:hidden;}
+  .lead-img-wrap img{
+    width:100%;height:420px;object-fit:cover;
+    filter:saturate(1.05) contrast(1.05);
+    transition:transform 0.6s ease;
+  }
+  .lead-img-wrap:hover img{transform:scale(1.04);}
+  .badge{
+    position:absolute;top:1rem;left:1rem;
+    background:var(--red);color:#fff;
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;font-weight:700;
+    padding:0.35rem 0.7rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .lead-text .kicker{
+    color:var(--red);font-weight:800;font-size:0.78rem;
+    text-transform:uppercase;letter-spacing:0.08em;
+    display:block;margin-bottom:0.5rem;
+  }
+  .lead-text h2{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(1.8rem,3.4vw,2.7rem);
+    line-height:1.08;margin:0 0 0.8rem;
+    font-weight:700;
+  }
+  .lead-text p{
+    color:var(--muted);
+    font-size:1rem;
+    line-height:1.6;
+    margin-bottom:1rem;
+  }
+  .byline{
+    font-family:'Space Mono',monospace;
+    font-size:0.72rem;
+    color:var(--muted);
+    border-top:1px solid var(--line);
+    padding-top:0.7rem;
+  }
+
+  /* ---------- SIDEBAR: TRENDING ---------- */
+  .sidebar h3{
+    font-family:'Playfair Display',serif;
+    font-size:1.1rem;
+    border-bottom:3px solid var(--red);
+    padding-bottom:0.5rem;
+    margin-bottom:1rem;
+    display:flex;align-items:center;gap:0.4rem;
+  }
+  .trend-item{
+    display:flex;gap:0.8rem;
+    padding:0.8rem 0;
+    border-bottom:1px solid var(--line);
+    align-items:flex-start;
+  }
+  .trend-num{
+    font-family:'Playfair Display',serif;
+    font-weight:900;font-style:italic;
+    font-size:1.6rem;color:var(--mustard);
+    line-height:1;min-width:1.6rem;
+  }
+  .trend-item h4{
+    margin:0 0 0.2rem;
+    font-size:0.92rem;font-weight:700;line-height:1.3;
+  }
+  .trend-item span{
+    font-size:0.72rem;color:var(--muted);
+    font-family:'Space Mono',monospace;
+  }
+
+  /* ---------- STORY GRID ---------- */
+  section.section-block{margin-bottom:2.5rem;}
+  .section-title{
+    display:flex;align-items:center;gap:0.8rem;
+    margin-bottom:1.4rem;
+  }
+  .section-title h2{
+    font-family:'Playfair Display',serif;
+    font-size:1.7rem;font-weight:900;margin:0;
+    white-space:nowrap;
+  }
+  .section-title::after{
+    content:"";flex:1;height:2px;background:var(--ink);
+  }
+  .grid3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1.6rem;
+  }
+  article.card{
+    background:#fff;
+    border:1px solid var(--line);
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  article.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 14px 28px rgba(21,20,26,0.16);
+  }
+  article.card .img-box{overflow:hidden;height:200px;}
+  article.card img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;}
+  article.card:hover img{transform:scale(1.08);}
+  .card-body{padding:1.1rem 1.2rem 1.3rem;}
+  .cat-tag{
+    font-size:0.68rem;font-weight:800;
+    text-transform:uppercase;letter-spacing:0.07em;
+    color:var(--blue);
+  }
+  .card-body h3{
+    font-family:'Playfair Display',serif;
+    font-size:1.18rem;margin:0.4rem 0 0.5rem;
+    line-height:1.25;
+  }
+  .card-body p{
+    font-size:0.88rem;color:var(--muted);
+    line-height:1.55;margin:0 0 0.8rem;
+  }
+  .card-meta{
+    display:flex;justify-content:space-between;
+    font-family:'Space Mono',monospace;
+    font-size:0.68rem;color:var(--muted);
+    border-top:1px dashed var(--line);
+    padding-top:0.6rem;
+  }
+
+  /* ---------- NEWSLETTER ---------- */
+  .newsletter{
+    background:var(--ink);
+    color:var(--paper);
+    text-align:center;
+    padding:3rem 1.5rem;
+    margin:3rem 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .newsletter::before{
+    content:"PULSE";
+    position:absolute;
+    font-family:'Playfair Display',serif;
+    font-weight:900;font-style:italic;
+    font-size:9rem;
+    color:rgba(244,239,228,0.04);
+    top:-2rem;left:-1rem;
+    white-space:nowrap;
+  }
+  .newsletter h2{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(1.6rem,4vw,2.4rem);
+    margin:0 0 0.6rem;
+    position:relative;
+  }
+  .newsletter p{color:rgba(244,239,228,0.7);margin-bottom:1.5rem;position:relative;}
+  .sub-form{
+    display:flex;justify-content:center;gap:0;
+    max-width:420px;margin:0 auto;
+    position:relative;
+  }
+  .sub-form input{
+    flex:1;padding:0.85rem 1rem;
+    border:none;font-family:'Inter',sans-serif;
+    font-size:0.9rem;background:var(--paper);color:var(--ink);
+  }
+  .sub-form button{
+    background:var(--red);color:#fff;border:none;
+    padding:0.85rem 1.4rem;font-weight:700;
+    text-transform:uppercase;font-size:0.8rem;
+    letter-spacing:0.05em;cursor:pointer;
+    transition:background 0.2s;
+  }
+  .sub-form button:hover{background:var(--mustard);color:var(--ink);}
+  .form-note{
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;margin-top:0.8rem;
+    color:var(--mustard);min-height:1em;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:4px solid var(--ink);
+    padding:2rem 1rem;
+    text-align:center;
+    font-family:'Space Mono',monospace;
+    font-size:0.72rem;
+    color:var(--muted);
+  }
+  footer .flogo{
+    font-family:'Playfair Display',serif;
+    font-weight:900;font-size:1.3rem;color:var(--ink);
+    margin-bottom:0.5rem;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:880px){
+    .lead-grid{grid-template-columns:1fr;}
+    .grid3{grid-template-columns:repeat(2,1fr);}
+    .lead-img-wrap img{height:280px;}
+  }
+  @media (max-width:560px){
+    .grid3{grid-template-columns:1fr;}
+    nav.categories a{padding:0.7rem 0.9rem;font-size:0.74rem;}
+    .edition-row{font-size:0.62rem;}
+    .sub-form{flex-direction:column;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .ticker{animation:none;}
+    article.card, .lead-img-wrap img{transition:none;}
+  }
+
+  /* Focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline:3px solid var(--blue);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="ticker-wrap">
+    <div class="ticker" id="ticker">
+      <span><b>BREAKING</b>Global markets rally as tech sector posts record gains</span>
+      <span><b>WEATHER</b>Heatwave grips three continents, scientists point to shifting jet stream</span>
+      <span><b>SPORTS</b>Underdog squad clinches championship in stunning overtime finish</span>
+      <span><b>SCIENCE</b>Researchers map deepest ocean trench with new sonar array</span>
+      <span><b>BREAKING</b>Global markets rally as tech sector posts record gains</span>
+      <span><b>WEATHER</b>Heatwave grips three continents, scientists point to shifting jet stream</span>
+      <span><b>SPORTS</b>Underdog squad clinches championship in stunning overtime finish</span>
+      <span><b>SCIENCE</b>Researchers map deepest ocean trench with new sonar array</span>
+    </div>
+  </div>
+
+  <header class="masthead">
+    <div class="edition-row">
+      <span id="todayDate">Monday, June 29, 2026</span>
+      <span>Vol. 12 · No. 184 · Global Edition</span>
+    </div>
+    <h1 class="logo">THE DAILY<span class="accent">Pulse</span></h1>
+    <div class="tagline">News that finds you first</div>
+  </header>
+
+  <nav class="categories">
+    <a href="#lead">Top Story</a>
+    <a href="#world">World</a>
+    <a href="#tech">Technology</a>
+    <a href="#culture">Culture</a>
+    <a href="#sports">Sports</a>
+    <a href="#newsletter">Subscribe</a>
+  </nav>
+
+  <main>
+
+    <!-- LEAD STORY -->
+    <section class="lead-grid" id="lead">
+      <div class="lead-img-wrap">
+        <span class="badge">● Live Coverage</span>
+        <img src="https://picsum.photos/seed/skyline/900/700" alt="City skyline at dusk with illuminated towers">
+      </div>
+      <div class="lead-text">
+        <span class="kicker">Top Story</span>
+        <h2>Cities Race to Rebuild Skylines Around Renewable Power Grids</h2>
+        <p>A wave of metropolitan governments is fast-tracking infrastructure deals that could reshape how downtown districts generate and share electricity, with the first pilot towers expected to go live before year's end.</p>
+        <p>Officials say the shift was accelerated by record energy demand last summer, pushing planners to rethink design from the ground up rather than retrofit aging systems.</p>
+        <div class="byline">BY A. MERCER · METRO DESK · 6 MIN READ</div>
+      </div>
+    </section>
+
+    <!-- WORLD -->
+    <section class="section-block" id="world">
+      <div class="section-title"><h2>World</h2></div>
+      <div class="grid3">
+
+        <article class="card">
+          <div class="img-box"><img src="https://picsum.photos/seed/harbor/500/400" alt="Cargo ships docked at a busy harbor"></div>
+          <div class="card-body">
+            <span class="cat-tag">Trade</span>
+            <h3>Port Authorities Report Busiest Shipping Quarter in a Decade</h3>
+            <p>Container traffic surged across major harbors as supply chains stabilize and new trade routes open.</p>
+            <div class="card-meta"><span>WORLD DESK</span><span>4 MIN</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img-box"><img src="https://picsum.photos/seed/summit/500/400" alt="Delegates seated at an international summit table"></div>
+          <div class="card-body">
+            <span class="cat-tag">Diplomacy</span>
+            <h3>Leaders Reach Tentative Accord on Cross-Border Water Rights</h3>
+            <p>A multi-year dispute may be nearing resolution after marathon closed-door negotiations.</p>
+            <div class="card-meta"><span>FOREIGN AFFAIRS</span><span>5 MIN</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img-box"><img src="https://picsum.photos/seed/market/500/400" alt="Bustling outdoor street market with vendor stalls"></div>
+          <div class="card-body">
+            <span class="cat-tag">Economy</span>
+            <h3>Street Markets See Revival as Shoppers Return to City Centers</h3>
+            <p>Foot traffic data shows a sharp rebound in informal retail across several major capitals.</p>
+            <div class="card-meta"><span>BUSINESS</span><span>3 MIN</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- TECH + SIDEBAR -->
+    <section class="section-block" id="tech">
+      <div class="section-title"><h2>Technology</h2></div>
+      <div class="lead-grid" style="border-bottom:none;padding-bottom:0;">
+        <div class="grid3" style="grid-template-columns:repeat(2,1fr);grid-column:1/2;">
+
+          <article class="card">
+            <div class="img-box"><img src="https://picsum.photos/seed/robotics/500/400" alt="Robotic arm assembling components on a factory line"></div>
+            <div class="card-body">
+              <span class="cat-tag">Robotics</span>
+              <h3>Factory Floors Quietly Become Testbeds for Adaptive Machines</h3>
+              <p>New sensor packages let assembly robots adjust to defects in real time, cutting downtime sharply.</p>
+              <div class="card-meta"><span>TECH DESK</span><span>6 MIN</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="img-box"><img src="https://picsum.photos/seed/circuit/500/400" alt="Close up of a glowing circuit board"></div>
+            <div class="card-body">
+              <span class="cat-tag">Hardware</span>
+              <h3>Chipmakers Unveil Cooler-Running Designs for Dense Data Centers</h3>
+              <p>Lower thermal output could trim energy bills for cloud providers running always-on workloads.</p>
+              <div class="card-meta"><span>TECH DESK</span><span>4 MIN</span></div>
+            </div>
+          </article>
+
+        </div>
+
+        <aside class="sidebar">
+          <h3>🔥 Trending Now</h3>
+          <div class="trend-item">
+            <span class="trend-num">01</span>
+            <div><h4>Startup unveils battery that charges in ninety seconds</h4><span>247K reads</span></div>
+          </div>
+          <div class="trend-item">
+            <span class="trend-num">02</span>
+            <div><h4>Coastal town rebuilds entirely on stilts after flooding</h4><span>198K reads</span></div>
+          </div>
+          <div class="trend-item">
+            <span class="trend-num">03</span>
+            <div><h4>Archaeologists uncover sealed chamber beneath old fortress</h4><span>176K reads</span></div>
+          </div>
+          <div class="trend-item">
+            <span class="trend-num">04</span>
+            <div><h4>League announces surprise expansion to two new cities</h4><span>152K reads</span></div>
+          </div>
+          <div class="trend-item">
+            <span class="trend-num">05</span>
+            <div><h4>Chefs debate as fermentation trend hits home kitchens</h4><span>121K reads</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CULTURE -->
+    <section class="section-block" id="culture">
+      <div class="section-title"><h2>Culture</h2></div>
+      <div class="grid3">
+
+        <article class="card">
+          <div class="img-box"><img src="https://picsum.photos/seed/gallery/500/400" alt="Visitors viewing art in a bright museum gallery"></div>
+          <div class="card-body">
+            <span class="cat-tag">Art</span>
+            <h3>Museum's Surprise Night Hours Draw Record Young Crowds</h3>
+            <p>Late openings paired with live music have turned quiet galleries into weekend hotspots.</p>
+            <div class="card-meta"><span>CULTURE DESK</span><span>3 MIN</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img-box"><img src="https://picsum.photos/seed/concert/500/400" alt="Crowd at an outdoor concert with stage lights"></div>
+          <div class="card-body">
+            <span class="cat-tag">Music</span>
+            <h3>Festival Lineup Leans Into Genre-Blurring Newcomers</h3>
+            <p>Organizers say ticket demand spiked after this year's deliberately eclectic booking.</p>
+            <div class="card-meta"><span>ARTS</span><span>4 MIN</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img-box"><img src="https://picsum.photos/seed/bookshop/500/400" alt="Cozy independent bookshop interior with shelves"></div>
+          <div class="card-body">
+            <span class="cat-tag">Books</span>
+            <h3>Independent Bookshops Report Best Sales Year Since 2019</h3>
+            <p>A renewed appetite for physical books is reviving neighborhood storefronts.</p>
+            <div class="card-meta"><span>BOOKS</span><span>3 MIN</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SPORTS -->
+    <section class="section-block" id="sports">
+      <div class="section-title"><h2>Sports</h2></div>
+      <div class="grid3">
+
+        <article class="card">
+          <div class="img-box"><img src="https://picsum.photos/seed/stadium/500/400" alt="Packed stadium under bright floodlights at night"></div>
+          <div class="card-body">
+            <span class="cat-tag">Finals</span>
+            <h3>Overtime Thriller Sends Underdog Team to First-Ever Title</h3>
+            <p>A last-second play capped a season nobody saw coming for the league's youngest roster.</p>
+            <div class="card-meta"><span>SPORTS DESK</span><span>5 MIN</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img-box"><img src="https://picsum.photos/seed/track/500/400" alt="Runners sprinting on an athletics track"></div>
+          <div class="card-body">
+            <span class="cat-tag">Athletics</span>
+            <h3>Teen Sprinter Breaks National Record at Regional Meet</h3>
+            <p>Coaches call the performance one of the most promising in the event's recent history.</p>
+            <div class="card-meta"><span>SPORTS DESK</span><span>3 MIN</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img-box"><img src="https://picsum.photos/seed/cycling/500/400" alt="Cyclists racing on a mountain road"></div>
+          <div class="card-body">
+            <span class="cat-tag">Cycling</span>
+            <h3>Mountain Stage Shakes Up Standings on Race's Toughest Day</h3>
+            <p>A surprise breakaway changed the leaderboard heading into the final week.</p>
+            <div class="card-meta"><span>SPORTS DESK</span><span>4 MIN</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter" id="newsletter">
+      <h2>Get the Pulse in your inbox</h2>
+      <p>One sharp briefing, every morning. No noise, no spam.</p>
+      <form class="sub-form" id="subForm">
+        <input type="email" id="emailInput" placeholder="you@example.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="form-note" id="formNote"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="flogo">THE DAILY PULSE</div>
+    <p>© <span id="year"></span> The Daily Pulse. All stories are illustrative sample content for demo purposes.</p>
+  </footer>
+
+  <script>
+    // Live-updating date in masthead
+    document.getElementById('todayDate').textContent =
+      new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Newsletter form feedback (no backend — demo only)
+    const form = document.getElementById('subForm');
+    const note = document.getElementById('formNote');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value.trim();
+      if(email){
+        note.textContent = "You're in. First briefing lands tomorrow morning.";
+        form.reset();
+      }
+    });
+
+    // Pause ticker on hover for readability
+    const ticker = document.getElementById('ticker');
+    ticker.addEventListener('mouseenter', () => ticker.style.animationPlayState = 'paused');
+    ticker.addEventListener('mouseleave', () => ticker.style.animationPlayState = 'running');
+  </script>
+
+</body>
+</html>
